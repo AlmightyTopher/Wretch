@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User } from 'firebase/auth';
-import { getFirebaseAuth } from '@/lib/firebase';
+import { auth } from '@/lib/firebase';
 
 interface AuthContextType {
   user: User | null;
@@ -16,24 +16,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const setupAuth = async () => {
-      try {
-        const auth = await getFirebaseAuth();
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-          setUser(user);
-          setLoading(false);
-        });
+    if (auth) { // Only run if Firebase Auth is available (client-side)
+      const unsubscribe = auth.onAuthStateChanged((user) => {
+        setUser(user);
+        setLoading(false);
+      });
 
-        // Clean up the subscription
-        return () => unsubscribe();
-      } catch (error) {
-        console.error("Error initializing Firebase Auth:", error);
-        setLoading(false); // Ensure loading is set to false even if auth init fails
-      }
-    };
+      // Clean up the subscription
+      return () => unsubscribe();
+    } else {
+      // If auth is not available (server-side or error), stop loading
+      setLoading(false);
+    }
 
-    setupAuth();
-  }, []);
+  }, [auth]); // Add auth as a dependency
 
   return (
     <AuthContext.Provider value={{ user, loading }}>

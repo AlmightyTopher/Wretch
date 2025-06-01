@@ -7,7 +7,7 @@ import {
   signOut as firebaseSignOut,
   User,
 } from 'firebase/auth';
-import { getFirebaseAuth } from '../lib/firebase';
+import { auth } from '../lib/firebase';
 
 /**
  * Signs in a user with email and password using Firebase Authentication.
@@ -17,8 +17,10 @@ import { getFirebaseAuth } from '../lib/firebase';
  * @throws An error if sign-in fails.
  */
 export const signInWithEmailAndPassword = async (email: string, password: string): Promise<User> => {
+  if (!auth) {
+    throw new Error("Firebase Auth is not initialized in this environment.");
+  }
   try {
-    const auth = await getFirebaseAuth();
     const userCredential = await firebaseSignInWithEmailAndPassword(auth, email, password);
     console.log('User signed in successfully:', userCredential.user.uid);
     return userCredential.user;
@@ -34,8 +36,11 @@ export const signInWithEmailAndPassword = async (email: string, password: string
  * @throws An error if sign-out fails.
  */
 export const signOutUser = async (): Promise<void> => {
+  if (!auth) {
+    console.warn("Attempted to sign out, but Firebase Auth is not initialized.");
+    return; // Or throw an error if preferred
+  }
   try {
-    const auth = await getFirebaseAuth();
     await firebaseSignOut(auth);
     console.log('User signed out successfully');
   } catch (error: any) {

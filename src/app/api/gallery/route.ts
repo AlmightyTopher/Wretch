@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import { getServerSession } from 'next-auth/next';
-import { admin } from '@/lib/firebase'; // Assuming your Firebase Admin SDK is initialized here and includes Firestore
 import formidable from 'formidable';
+import { adminDB, adminStorage } from '@/lib/firebase-admin'; // Import from new admin file
 
-const db = admin.firestore(); // Initialize Firestore
+const db = adminDB; // Use adminDB from the new file
 
 export async function GET(req: NextRequest) {
   const session = await getServerSession({ req });
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'No image file uploaded' }, { status: 400 });
     }
 
-    const storageBucket = admin.storage().bucket();
+    const storageBucket = adminStorage.bucket(); // Use adminStorage
     const uniqueFilename = `${Date.now()}_${imageFile.originalFilename}`;
     const filePath = `gallery_images/${uniqueFilename}`;
     const file = storageBucket.file(filePath);
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
     const galleryRef = db.collection('gallery');
     const newGalleryDoc = await galleryRef.add({
       downloadURL,
-      fileName: uniqueFilename,
+      fileName: uniqueFilename, // Use adminDB.firestore.FieldValue.serverTimestamp() if needed
       uploadedAt: admin.firestore.FieldValue.serverTimestamp(),
       // Add any other relevant metadata here
     });

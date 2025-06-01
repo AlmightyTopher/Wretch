@@ -2,65 +2,36 @@
 
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { signInWithEmailAndPassword, getAuth } from 'firebase/auth';
-import { app as clientApp, firebaseConfig as clientFirebaseConfig } from '../../../lib/firebase'; // Import clientFirebaseConfig for logging
-// import { adminAuth } from '../../../lib/firebaseAdmin'; // DEBUG: Temporarily commented out
-
-console.log("[NextAuth] Initializing... Verifying Firebase Client Config:");
-console.log("[NextAuth] API Key Loaded:", !!clientFirebaseConfig.apiKey);
-console.log("[NextAuth] Auth Domain Loaded:", !!clientFirebaseConfig.authDomain);
-console.log("[NextAuth] Project ID Loaded:", !!clientFirebaseConfig.projectId);
-
-let auth: any;
-try {
-  auth = getAuth(clientApp);
-  console.log("[NextAuth] Firebase client auth object initialized successfully.");
-} catch (e: any) {
-  console.error("[NextAuth] CRITICAL ERROR initializing Firebase client auth:", e.message, e.stack);
-  // If auth fails to initialize, the authorize function will likely fail catastrophically.
-}
+import { adminAuth } from '../../../lib/firebase-admin';
 
 export const authOptions = {
+  // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        email: { label: 'Email', type: 'email', placeholder: 'admin@example.com' },
-        password: { label: 'Password', type: 'password' },
+        idToken: { label: 'ID Token', type: 'text' }, // Expecting the Firebase ID token
       },
       async authorize(credentials) {
-        console.log("[NextAuth][authorize] Attempting to authorize...");
-        if (!auth) {
-          console.error("[NextAuth][authorize] Firebase client auth object is not available. Cannot authorize.");
-          return null;
-        }
-        if (!credentials?.email || !credentials?.password) {
-          console.log("[NextAuth][authorize] Missing credentials.");
-          return null;
-        }
-        try {
-          console.log(`[NextAuth][authorize] Attempting Firebase sign-in for ${credentials.email}`);
-          const userCredential = await signInWithEmailAndPassword(
-            auth,
-            credentials.email,
-            credentials.password
-          );
-          const user = userCredential.user;
-          console.log("[NextAuth][authorize] Firebase sign-in successful for:", user?.email);
 
-          if (user) {
-            console.log(`[NextAuth][authorize] DEBUG: Bypassing Admin SDK. Granting admin role to ${user.email}.`);
-            return {
-              id: user.uid,
-              name: user.displayName || user.email,
-              email: user.email,
-              role: 'admin',
-            };
-          }
-          console.log("[NextAuth][authorize] User object not found after sign-in attempt.");
+        const idToken = credentials?.idToken;
+        if (!idToken) {
           return null;
-        } catch (error: any) {
-          console.error("[NextAuth][authorize] Error during Firebase client-side sign-in:", error.code, error.message, error.stack);
+        }
+
+        try {
+          const decodedToken = await adminAuth.verifyIdToken(idToken);
+          const { uid, email, customClaims } = decodedToken;
+
+          // Return a user object that will be saved in the JWT
+          return {
+            id: uid,
+            email: email,
+            // Include custom claims or default role if needed
+            role: customClaims?.role || 'user', // Assuming 'role' is a custom claim
+          };
+        } catch (error) {
+          console.error("Error verifying Firebase ID token:", error);
           return null;
         }
       },

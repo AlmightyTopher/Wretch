@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { db } from '@/lib/firebase';
+import { adminDB } from '../../lib/firebase-admin';
 import {
   collection,
   doc,
@@ -30,14 +30,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     if (method === 'GET') {
-      const blogsCol = collection(db, 'blogs');
+      const blogsCol = collection(adminDB, 'blogs');
       const snapshot = await getDocs(blogsCol);
       const blogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Blog));
       return res.status(200).json(blogs);
 
     } else if (method === 'POST') {
       const newBlogData: Omit<Blog, 'id'> = body;
-      const docRef = await addDoc(collection(db, 'blogs'), newBlogData);
+      const docRef = await addDoc(collection(adminDB, 'blogs'), newBlogData);
       return res.status(201).json({ id: docRef.id, ...newBlogData });
 
     } else if (method === 'PUT') {
@@ -46,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({ error: 'Slug is required for update' });
       }
 
-      const blogsCol = collection(db, 'blogs');
+      const blogsCol = collection(adminDB, 'blogs');
       const q = query(blogsCol, where('slug', '==', targetSlug));
       const snapshot = await getDocs(q);
 
@@ -54,7 +54,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(404).json({ error: 'Blog not found' });
       }
 
-      const docToUpdateRef = doc(db, 'blogs', snapshot.docs[0].id);
+      const docToUpdateRef = doc(adminDB, 'blogs', snapshot.docs[0].id);
       const updateData: Partial<Blog> = body;
       await updateDoc(docToUpdateRef, updateData);
 
@@ -66,7 +66,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({ error: 'Slug is required for deletion' });
       }
 
-      const blogsCol = collection(db, 'blogs');
+      const blogsCol = collection(adminDB, 'blogs');
       const q = query(blogsCol, where('slug', '==', targetSlug));
       const snapshot = await getDocs(q);
 
@@ -74,7 +74,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(404).json({ error: 'Blog not found' });
       }
 
-      const docToDeleteRef = doc(db, 'blogs', snapshot.docs[0].id);
+      const docToDeleteRef = doc(adminDB, 'blogs', snapshot.docs[0].id);
       await deleteDoc(docToDeleteRef);
 
       return res.status(204).end();

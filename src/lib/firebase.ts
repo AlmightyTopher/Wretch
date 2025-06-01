@@ -1,9 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp, getApps, getApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -13,23 +13,14 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Initialize Firebase
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+const isBrowser = typeof window !== "undefined";
 
-// Export async functions for lazy loading
-const getFirebaseAuth = async () => {
-  const { getAuth } = await import("firebase/auth");
-  return getAuth(app);
-};
+const app = isBrowser
+  ? !getApps().length
+    ? initializeApp(firebaseConfig)
+    : getApp()
+  : null;
 
-const getFirebaseFirestore = async () => {
-  const { getFirestore } = await import("firebase/firestore");
-  return getFirestore(app);
-};
-
-const getFirebaseStorage = async () => {
-  const { getStorage } = await import("firebase/storage");
-  return getStorage(app);
-};
-
-export { app, getFirebaseAuth, getFirebaseFirestore, getFirebaseStorage };
+export const auth = isBrowser && app ? getAuth(app) : null;
+export const db = isBrowser && app ? getFirestore(app) : null;
+export const storage = isBrowser && app ? getStorage(app) : null;

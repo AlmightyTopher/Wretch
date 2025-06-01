@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getBlogPosts } from "../../services/blogService";
@@ -44,7 +45,7 @@ export default function BlogIndexPage() {
   if (error) {
     return (
       <section className="relative flex flex-col items-center justify-center min-h-[80vh] w-full overflow-hidden p-4">
-        <p style={{ color: 'red' }}>{error}</p>
+        <p style={{ color: "red" }}>{error}</p>
       </section>
     );
   }
@@ -65,13 +66,15 @@ export default function BlogIndexPage() {
         ) : (
           blogPosts.map((post) => (
             <Link
+              key={post.id}
+              href={`/blogs/${post.slug}`}
               className="group block bg-matte-black/80 rounded-xl shadow-lg p-6 flex flex-col gap-4 hover:scale-[1.03] hover:shadow-2xl transition-transform border border-acid-magenta/30 hover:border-acid-magenta"
               style={{ textDecoration: "none" }}
-            > {/* TODO: Replace <img> with next/image for optimized rendering */}
+            >
               <div className="w-full aspect-[3/2] bg-gradient-to-br from-matte-black to-electric-purple rounded-lg overflow-hidden mb-3 flex items-center justify-center">
                 {post.imageUrl ? (
                   <img
-                    src={post.imageUrl} // TODO: Replace with next/image
+                    src={post.imageUrl}
                     alt={post.title}
                     className="object-cover w-full h-full group-hover:scale-105 transition-transform"
                   />
@@ -82,11 +85,8 @@ export default function BlogIndexPage() {
               <h2 className="text-2xl font-header text-acid-magenta mb-1">
                 {post.title}
               </h2>
-              {/* TODO: Display content snippet or description if available in Firestore */}
-              {/* Using first 150 characters as a snippet placeholder */}
               <div className="text-white/80 mb-2">
-                {/* Display content snippet */}
-                {post.content ? `${post.content.substring(0, 150)}...` : ''}
+                {post.content ? `${post.content.substring(0, 150)}...` : ""}
               </div>
               {/* TODO: Add tags, author, and date if available in Firestore data structure */}
             </Link>
@@ -95,3 +95,4 @@ export default function BlogIndexPage() {
       </div>
     </section>
   );
+}

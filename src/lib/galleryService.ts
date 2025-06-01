@@ -1,7 +1,7 @@
 // Instructions: Fix the GalleryImage interface, AddGalleryImageError class, use Timestamp for dates, and improve Firestore initialization and error handling.
 
 import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, Timestamp } from "firebase/firestore";
-import { getFirebaseFirestore } from './firebase'; // Corrected import
+import { db } from './firebase'; // Corrected import
 
 // Define the GalleryImage interface correctly
 export interface GalleryImage {
@@ -36,18 +36,8 @@ class DeleteGalleryImageError extends Error {
   }
 }
 
-// Get Firestore instance asynchronously
-let dbInstance: any; // Consider using a more specific type if possible
-const initializeDb = async () => {
-  if (!dbInstance) {
-    dbInstance = await getFirebaseFirestore();
-  }
-  return dbInstance;
-};
-
 const getGalleryCollection = async () => {
-  const db = await initializeDb();
-  return collection(db, 'gallery');
+  return collection(db!, 'gallery'); // Use non-null assertion if you're sure db will be available
 }
 
 // Type for image data when adding (ID is auto-generated, uploadedAt is set by server)

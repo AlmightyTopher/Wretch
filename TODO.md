@@ -1,6 +1,6 @@
 # ✅ Full TODO List (Prioritized as of 9:30am PST 06/01/2025)
 
-**Last Updated:** 2024-06-01T17:02:32Z
+**Last Updated:** 2024-06-02T17:03:07Z
 lastUpdated: 2025-06-01T10:28:29-0700
 **Instructions:**
 
@@ -67,12 +67,16 @@ lastUpdated: 2025-06-01T10:28:29-0700
      * Consider adding more comprehensive error handling and logging for Firebase interactions in the admin panel.
      * Explore using Firebase Emulator Suite for local development and testing of Firebase-dependent features.
     * Firestore integration for gallery image metadata is implemented.
+    * Securely initialize Firebase Admin SDK in server-side context via src/lib/firebase-admin.ts
+
 8. [ ] Validate all inputs (client-side and Firebase rules), sanitize form/overlay inputs, prevent editing of sensitive fields like `id`.
 9. [ ] **Firebase Authentication:** Implement Firebase Authentication for admin access.
     * Logout support is implemented with a `LogoutButton` component integrated into the admin dashboard page.
     * Session persistence is enabled in `authService.ts` with a TODO to call the initialization function on app startup.
 10. [ ] Add user-friendly error messages, error boundaries.
 11. [ ] Add toasts/snackbars and undo for cart actions (merge feedback/UX items).
+12. [ ] Fix Firebase Admin imports in /pages/api/auth/[...nextauth].ts
+    ⚠ Blocked: waiting for guidance on implementing next-auth with Firebase Admin SDK authentication.
 12. [ ] **Firebase Storage:** Implement image uploads to Firebase Storage for products, blog posts, and gallery.
 13. [ ] Add optimistic UI, undo/redo, validation, bulk edits for product/category CRUD.
 14. [ ] Implement blog functionality:
@@ -122,6 +126,8 @@ lastUpdated: 2025-06-01T10:28:29-0700
       * Add integration tests to verify image uploads to Firebase Storage and metadata updates in Firestore through the admin gallery editor.
 13. [ ] Add address validation, guest checkout.
 14. [x] Add address validation, guest checkout. **Skipped: Requires non-admin visual/editing.**
+15. [ ] Fix Firebase Admin imports in /api/gallery/route.ts
+    * Firebase Admin imports updated to use `src/lib/firebase-admin.ts`
 15. [ ] Add roles (using Firebase Authentication custom claims), session expire warnings, 2FA (Firebase Authentication), activity logs (potentially in Firebase).
 16. [ ] Add admin gallery editor, image lazy load and optimization (using Firebase Storage features or a CDN).
 17. [x] Add roles (using Firebase Authentication custom claims), session expire warnings, 2FA (Firebase Authentication), activity logs (potentially in Firebase).
@@ -131,6 +137,8 @@ lastUpdated: 2025-06-01T10:28:29-0700
     * verifiedBy: Gemini (Firebase)
     * notes:
 
+18. [ ] Fix Firebase Admin imports in /pages/api/blogs.ts
+    * Firebase Admin imports updated to use `src/lib/firebase-admin.ts`
       * Add unit tests for role-based access control logic and integration tests for session management and activity logging with Firebase.
 18. [ ] Add dark mode toggle, more device testing
 19. [ ] Add OpenGraph, sitemap.xml, robots.txt
