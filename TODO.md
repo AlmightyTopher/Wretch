@@ -32,12 +32,12 @@
 ---
 
 ## 🥇 High Priority
-1. [ ] Real payment provider (Stripe, etc.) and order confirmation email/notification
+1. [ ] Real payment provider (Stripe, etc.) and order confirmation email/notification - Payment processor stub and Firestore order saving implemented. Email notification pending.
 2. [x] Implement protected API routes for adding and removing gallery images.
-3. [ ] Implement image upload to Firebase Storage for gallery images.
-4. [ ] Implement database storage (Firestore/Realtime Database) for gallery image metadata.
+3. [ ] Implement image upload to Firebase Storage for gallery images. (Core upload function exists in `src/lib/storageService.ts`)
+4. [x] Implement database storage (Firestore/Realtime Database) for gallery image metadata.
 5. [ ] Create an Admin Gallery Editor UI for managing gallery images.
-6. [ ] Update the public gallery page to fetch and display images from the database.
+6. [x] Update the public gallery page to fetch and display images from the database.
 7. [ ] **Firebase Integration:** Implement Firebase for data storage for products, categories, blogs, and gallery items.status: verified
 lastVerified: 2024-05-22T12:00:00Z
 verifiedBy: Gemini (Firebase)
@@ -45,6 +45,7 @@ notes:
 - Add unit tests for Firebase initialization and core service functions (e.g., data fetching, authentication status).
 - Consider adding more comprehensive error handling and logging for Firebase interactions in the admin panel.
 - Explore using Firebase Emulator Suite for local development and testing of Firebase-dependent features.
+ - Firestore integration for gallery image metadata is implemented.
 8. [ ] Validate all inputs (client-side and Firebase rules), sanitize form/overlay inputs, prevent editing of sensitive fields like `id`.
 9. [ ] **Firebase Authentication:** Implement Firebase Authentication for admin access.
 10. [ ] Add user-friendly error messages, error boundaries.
@@ -52,7 +53,7 @@ notes:
 12. [ ] **Firebase Storage:** Implement image uploads to Firebase Storage for products, blog posts, and gallery.
 13. [ ] Add optimistic UI, undo/redo, validation, bulk edits for product/category CRUD.
 14. [ ] Implement blog functionality:
- * [ ] Create a new data structure in Firebase for blog posts (title, content, optional image, slug, date, etc.).
+* [ ] Create a new data structure in Firebase for blog posts (title, content, optional image, slug, date, etc.).
  * [ ] Create a blog index page displaying blog titles and optional images, linking to individual blog posts.
 15. [ ] Add keyboard navigation for overlays and modals, ensure contrast ratio meets WCAG, add ARIA roles for screen readers
 15. [x] Integrate a dashboard for order tracking and management (leveraging Firebase data).status: verified
@@ -60,7 +61,7 @@ notes:
     verifiedBy: Gemini (Firebase)
     notes:
  - Add end-to-end tests using a tool like Cypress or Playwright to verify the functionality of the order dashboard in the admin panel, including data display, filtering, and sorting.
-16. [ ] Replace all `<img>` with `next/image`, add loading strategy/quality tuning
+16. [ ] Replace all `<img>` with `next/image`, add loading strategy/quality tuning (Core upload function exists in `src/lib/storageService.ts`)
 17. [ ] Add `.vercelignore`, run `npm run build` validation, confirm `.env.local` for prod
 18. [ ] Add `NODE_ENV === 'production'` guards to hide admin overlays/edit tools in production
 
