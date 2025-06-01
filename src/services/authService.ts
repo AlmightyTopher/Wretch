@@ -1,6 +1,8 @@
 // src/services/authService.ts
 
 import {
+  setPersistence,
+  browserLocalPersistence,
   signInWithEmailAndPassword as firebaseSignInWithEmailAndPassword,
   signOut as firebaseSignOut,
   User,
@@ -42,7 +44,21 @@ export const signOutUser = async (): Promise<void> => {
   }
 };
 
-// TODO: Add more authentication-related functions as needed, e.g.,
+// Function to initialize Firebase Auth persistence
+export const initializeAuthPersistence = async (): Promise<void> => {
+  try {
+    const auth = await getFirebaseAuth();
+    await setPersistence(auth, browserLocalPersistence);
+    console.log('Firebase Auth persistence set to browserLocalPersistence');
+  } catch (error: any) {
+    console.error('Error setting Firebase Auth persistence:', error);
+    // Depending on the error, you might not want to throw here,
+    // as it shouldn't necessarily block app startup.
+  }
+};
+
+// TODO: Call initializeAuthPersistence() on app startup.
+// TODO: Add more authentication-related functions as needed, e.g.:
 // - createUserWithEmailAndPassword
 // - sendPasswordResetEmail
 // - onAuthStateChanged listener setup

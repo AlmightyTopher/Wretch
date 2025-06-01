@@ -1,7 +1,7 @@
 # ✅ Full TODO List (Prioritized as of 9:30am PST 06/01/2025)
 
 **Last Updated:** 2025-06-01T10:15:01-0700
-
+lastUpdated: 2025-06-01T10:28:29-0700
 **Instructions:**
 
 * Complete each task in order of priority. After each, scan the entire project (every file, byte, and feature) to ensure it works as intended. Only mark as done if fully verified. If a task cannot be completed due to errors or missing input, skip it and return later unless it is necessary to move the project forward.
@@ -66,9 +66,11 @@
      * Add unit tests for Firebase initialization and core service functions (e.g., data fetching, authentication status).
      * Consider adding more comprehensive error handling and logging for Firebase interactions in the admin panel.
      * Explore using Firebase Emulator Suite for local development and testing of Firebase-dependent features.
-     * Firestore integration for gallery image metadata is implemented.
+    * Firestore integration for gallery image metadata is implemented.
 8. [ ] Validate all inputs (client-side and Firebase rules), sanitize form/overlay inputs, prevent editing of sensitive fields like `id`.
 9. [ ] **Firebase Authentication:** Implement Firebase Authentication for admin access.
+    * Logout support is implemented with a `LogoutButton` component integrated into the admin dashboard page.
+    * Session persistence is enabled in `authService.ts` with a TODO to call the initialization function on app startup.
 10. [ ] Add user-friendly error messages, error boundaries.
 11. [ ] Add toasts/snackbars and undo for cart actions (merge feedback/UX items).
 12. [ ] **Firebase Storage:** Implement image uploads to Firebase Storage for products, blog posts, and gallery.
