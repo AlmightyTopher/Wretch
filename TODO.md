@@ -1,12 +1,29 @@
-# ✅ Full TODO List (Prioritized as of 9:30am pst 06/01/2025)
+# ✅ Full TODO List (Prioritized as of 9:30am PST 06/01/2025)
+
+**Last Updated:** 2025-06-01T10:15:01-0700
 
 **Instructions:**
 
 * Complete each task in order of priority. After each, scan the entire project (every file, byte, and feature) to ensure it works as intended. Only mark as done if fully verified. If a task cannot be completed due to errors or missing input, skip it and return later unless it is necessary to move the project forward.
+* If you want to bypass this list and have me execute the following tasks in "Just work mode," you must:
+
+  1. Explicitly say "Just work mode engage."
+  2. Provide the task number(s) or section to begin.
+  3. Allow me to auto-execute tasks in sequence without waiting for per-task confirmation unless a step requires input.
+  4. I will log all actions performed and flag anything skipped, failed, or requiring input.
+
+**To enable body-cast Just Work Mode view and execute all following tasks automatically:**
+
+1. Say "Just work mode engage in body-cast mode."
+2. I will begin with the first unchecked High Priority item in the list and continue sequentially.
+3. If any task requires input or fails, I will log the issue, skip the task, and continue. No confirmation will be requested unless essential.
+4. I will return an audit log of actions taken, errors found, and skipped items after completing the run.
+
 * **Integrate Firebase:** Utilize Firebase for data storage, authentication, image uploads, and any other applicable features.
 * **Hosting:** The site will be hosted on Cloudflare Pages.
-* **Domain:** The website domain is wretcheddesigns.com. 
+* **Domain:** The website domain is wretcheddesigns.com.
 * **Skipped Tasks:** If a task cannot be completed, skip it, note it here, and bring it to attention when all possible tasks are done.
+* **Auto-update Timestamp:** Use CI or a pre-commit Git hook to inject the actual timestamp where `{{AUTO_TIMESTAMP}}` appears. The hook must parse this file and replace `{{AUTO_TIMESTAMP}}` with the current date and time on every commit.
 
 ---
 
@@ -32,20 +49,24 @@
 ---
 
 ## 🥇 High Priority
+
 1. [ ] Real payment provider (Stripe, etc.) and order confirmation email/notification - Payment processor stub and Firestore order saving implemented. Email notification pending.
 2. [x] Implement protected API routes for adding and removing gallery images.
 3. [ ] Implement image upload to Firebase Storage for gallery images. (Core upload function exists in `src/lib/storageService.ts`)
 4. [x] Implement database storage (Firestore/Realtime Database) for gallery image metadata.
 5. [ ] Create an Admin Gallery Editor UI for managing gallery images.
 6. [x] Update the public gallery page to fetch and display images from the database.
-7. [ ] **Firebase Integration:** Implement Firebase for data storage for products, categories, blogs, and gallery items.status: verified
-lastVerified: 2024-05-22T12:00:00Z
-verifiedBy: Gemini (Firebase)
-notes:
-- Add unit tests for Firebase initialization and core service functions (e.g., data fetching, authentication status).
-- Consider adding more comprehensive error handling and logging for Firebase interactions in the admin panel.
-- Explore using Firebase Emulator Suite for local development and testing of Firebase-dependent features.
- - Firestore integration for gallery image metadata is implemented.
+7. [ ] **Firebase Integration:** Implement Firebase for data storage for products, categories, blogs, and gallery items.
+
+   * status: verified
+   * lastVerified: 2024-05-22T12:00:00Z
+   * verifiedBy: Gemini (Firebase)
+   * notes:
+
+     * Add unit tests for Firebase initialization and core service functions (e.g., data fetching, authentication status).
+     * Consider adding more comprehensive error handling and logging for Firebase interactions in the admin panel.
+     * Explore using Firebase Emulator Suite for local development and testing of Firebase-dependent features.
+     * Firestore integration for gallery image metadata is implemented.
 8. [ ] Validate all inputs (client-side and Firebase rules), sanitize form/overlay inputs, prevent editing of sensitive fields like `id`.
 9. [ ] **Firebase Authentication:** Implement Firebase Authentication for admin access.
 10. [ ] Add user-friendly error messages, error boundaries.
@@ -53,53 +74,73 @@ notes:
 12. [ ] **Firebase Storage:** Implement image uploads to Firebase Storage for products, blog posts, and gallery.
 13. [ ] Add optimistic UI, undo/redo, validation, bulk edits for product/category CRUD.
 14. [ ] Implement blog functionality:
-* [ ] Create a new data structure in Firebase for blog posts (title, content, optional image, slug, date, etc.).
- * [ ] Create a blog index page displaying blog titles and optional images, linking to individual blog posts.
+
+    * [x] Create a new data structure in Firebase for blog posts (title, content, optional image, slug, date, etc.).
+    * [ ] Create a blog index page displaying blog titles and optional images, linking to individual blog posts.
 15. [ ] Add keyboard navigation for overlays and modals, ensure contrast ratio meets WCAG, add ARIA roles for screen readers
-15. [x] Integrate a dashboard for order tracking and management (leveraging Firebase data).status: verified
-    lastVerified: 2024-05-22T12:00:00Z
-    verifiedBy: Gemini (Firebase)
-    notes:
- - Add end-to-end tests using a tool like Cypress or Playwright to verify the functionality of the order dashboard in the admin panel, including data display, filtering, and sorting.
-16. [ ] Replace all `<img>` with `next/image`, add loading strategy/quality tuning (Core upload function exists in `src/lib/storageService.ts`)
-17. [ ] Add `.vercelignore`, run `npm run build` validation, confirm `.env.local` for prod
-18. [ ] Add `NODE_ENV === 'production'` guards to hide admin overlays/edit tools in production
+16. [x] Integrate a dashboard for order tracking and management (leveraging Firebase data).
+
+    * status: verified
+    * lastVerified: 2024-05-22T12:00:00Z
+    * verifiedBy: Gemini (Firebase)
+    * notes:
+
+      * Add end-to-end tests using a tool like Cypress or Playwright to verify the functionality of the order dashboard in the admin panel, including data display, filtering, and sorting.
+17. [ ] Replace all `<img>` with `next/image`, add loading strategy/quality tuning (Core upload function exists in `src/lib/storageService.ts`)
+18. [ ] Add `.vercelignore`, run `npm run build` validation, confirm `.env.local` for prod
+19. [ ] Add `NODE_ENV === 'production'` guards to hide admin overlays/edit tools in production
+20. [ ] 🔐 Define and test Firebase Firestore Security Rules for all collections.
+21. [ ] 🔐 Audit Firebase features and remove test/demo mode configurations from production.
+22. [ ] 🔒 Ensure Firebase Auth session persistence mode aligns with expected UX.
+23. [ ] 🔐 Implement Firebase Auth custom claims for roles (admin/editor).
+24. [ ] 🔐 Enforce email verification for admin access.
+25. [ ] 🔧 Add CI or Git hook to auto-update the TODO.md timestamp on commit.
 
 ---
 
 ## 🥈 Medium Priority
-10. [x] **Firebase Integration:** Update existing API endpoints to interact with Firebase.status: verified
-lastVerified: 2024-05-22T12:00:00Z
-verifiedBy: Gemini (Firebase)
-notes:
-- Add integration tests for API endpoints to verify correct data interaction with Firebase Firestore.
-- Implement request validation for API endpoints to ensure data integrity.
-12. [ ] Add admin UI for gallery content (upload to Firebase Storage, sort, manage metadata in Firebase).
-13. [x] Add admin UI for gallery content (upload to Firebase Storage, sort, manage metadata in Firebase).
-    status: verified
-    lastVerified: 2024-05-22T12:00:00Z
-    verifiedBy: Gemini (Firebase)
-    notes:
- - Add integration tests to verify image uploads to Firebase Storage and metadata updates in Firestore through the admin gallery editor.
-15. [ ] Add address validation, guest checkout.
-15. [x] Add address validation, guest checkout. **Skipped: Requires non-admin visual/editing.**
-16. [ ] Add roles (using Firebase Authentication custom claims), session expire warnings, 2FA (Firebase Authentication), activity logs (potentially in Firebase).
-17. [ ] Add admin gallery editor, image lazy load and optimization (using Firebase Storage features or a CDN).
-16. [x] Add roles (using Firebase Authentication custom claims), session expire warnings, 2FA (Firebase Authentication), activity logs (potentially in Firebase).
-    status: verified
-    lastVerified: 2024-05-22T12:00:00Z
-    verifiedBy: Gemini (Firebase)
-    notes:
- - Add unit tests for role-based access control logic and integration tests for session management and activity logging with Firebase.
-17. [ ] Add dark mode toggle, more device testing
-18. [ ] Add OpenGraph, sitemap.xml, robots.txt
-19. [ ] Choose analytics tool (Plausible, Umami, GA), track key events: views, carts, checkouts
-20. [ ] Separate providers, hydrate SSR context
-21. [ ] Expand README: install/setup, UI screenshot, stack summary, admin credentials, Vercel deployment
-22. [ ] Remove unused lock files, standardize on npm
+
+10. [x] **Firebase Integration:** Update existing API endpoints to interact with Firebase.
+
+    * status: verified
+    * lastVerified: 2024-05-22T12:00:00Z
+    * verifiedBy: Gemini (Firebase)
+    * notes:
+
+      * Add integration tests for API endpoints to verify correct data interaction with Firebase Firestore.
+      * Implement request validation for API endpoints to ensure data integrity.
+11. [ ] Add admin UI for gallery content (upload to Firebase Storage, sort, manage metadata in Firebase).
+12. [x] Add admin UI for gallery content (upload to Firebase Storage, sort, manage metadata in Firebase).
+
+    * status: verified
+    * lastVerified: 2024-05-22T12:00:00Z
+    * verifiedBy: Gemini (Firebase)
+    * notes:
+
+      * Add integration tests to verify image uploads to Firebase Storage and metadata updates in Firestore through the admin gallery editor.
+13. [ ] Add address validation, guest checkout.
+14. [x] Add address validation, guest checkout. **Skipped: Requires non-admin visual/editing.**
+15. [ ] Add roles (using Firebase Authentication custom claims), session expire warnings, 2FA (Firebase Authentication), activity logs (potentially in Firebase).
+16. [ ] Add admin gallery editor, image lazy load and optimization (using Firebase Storage features or a CDN).
+17. [x] Add roles (using Firebase Authentication custom claims), session expire warnings, 2FA (Firebase Authentication), activity logs (potentially in Firebase).
+
+    * status: verified
+    * lastVerified: 2024-05-22T12:00:00Z
+    * verifiedBy: Gemini (Firebase)
+    * notes:
+
+      * Add unit tests for role-based access control logic and integration tests for session management and activity logging with Firebase.
+18. [ ] Add dark mode toggle, more device testing
+19. [ ] Add OpenGraph, sitemap.xml, robots.txt
+20. [ ] Choose analytics tool (Plausible, Umami, GA), track key events: views, carts, checkouts
+21. [ ] Separate providers, hydrate SSR context
+22. [ ] Expand README: install/setup, UI screenshot, stack summary, admin credentials, Vercel deployment
+23. [ ] Remove unused lock files, standardize on npm
 
 ---
+
 ## 🟦 Optional/Nice-to-Have Features
+
 * [ ] **Etsy Integration:** Research and implement integration with Etsy API when an account is available. Note: Direct linking for product management might be complex and may require manual updates or a separate sync process. This is likely a stretch goal and might not be fully achievable within this project scope.
 * [ ] **Firebase Integration:** Explore using Firebase Cloud Functions for backend logic (e.g., payment processing webhooks, email notifications).
 * [ ] User account system (for order history, etc.)
