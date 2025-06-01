@@ -1,10 +1,8 @@
 "use client";
 
 import { useState } from 'react';
-import { signInWithEmailAndPassword, getAuth } from 'firebase/auth';
-import { firebaseApp } from '@/lib/firebase'; // Assuming firebaseApp is exported from your firebase.ts
-
-const auth = getAuth(firebaseApp);
+import { signInWithEmailAndPassword } from '@/services/authService'; // Import from your authService
+import { useRouter } from 'next/navigation'; // Assuming you're using Next.js App Router for redirection
 
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -12,6 +10,7 @@ const AdminLogin: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const router = useRouter(); // Initialize router for redirection
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
@@ -19,8 +18,9 @@ const AdminLogin: React.FC = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      // Handle successful login (e.g., redirect to admin dashboard)
+      // Handle successful login: redirect to admin dashboard
       console.log('Admin logged in successfully!');
+      router.push('/admin/dashboard'); // Redirect to your admin dashboard route
     } catch (error: any) {
       setError(error.message);
       console.error('Error logging in:', error);
