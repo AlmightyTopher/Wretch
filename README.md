@@ -1,2 +1,2 @@
-# Wretch
-wretched designs
+# wretched-designs
+ wretched-designs
