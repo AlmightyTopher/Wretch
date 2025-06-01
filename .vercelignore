@@ -1,0 +1,11 @@
+gitignore
+node_modules
+.git
+.env
+.env.development
+.env.local
+.env.production
+.env.test
+.next
+dist
+out

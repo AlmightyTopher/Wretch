@@ -1,4 +1,4 @@
-import { getFirestore, collection, addDoc, Timestamp } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, Timestamp, getDocs } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 
 // TODO: Replace with your Firebase project configuration - This is a placeholder
@@ -27,5 +27,24 @@ export const addBlogPost = async (post: {
     console.log('Blog post added with ID: ', docRef.id);
   } catch (e) {
     console.error('Error adding blog post: ', e);
+  }
+};
+
+/**
+ * Fetches all blog posts from Firestore.
+ * @returns A Promise that resolves with an array of blog post objects.
+ * @throws An error if fetching fails.
+ */
+export const getBlogPosts = async () => {
+  try {
+    const querySnapshot = await getDocs(collection(db, 'blogPosts'));
+    const blogPosts = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return blogPosts;
+  } catch (error) {
+    console.error('Error fetching blog posts:', error);
+    throw new Error(`Failed to fetch blog posts: ${(error as Error).message || 'Unknown error'}`);
   }
 };

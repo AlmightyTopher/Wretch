@@ -1,7 +1,7 @@
 "use client";
 
-import { signOutUser } from '../../services/authService';
 import React from 'react';
+import { signOutUser } from '../services/authService';
 
 const LogoutButton: React.FC = () => {
   const handleLogout = async () => {

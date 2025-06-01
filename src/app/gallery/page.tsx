@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import dynamic from 'next/dynamic';
 import { getGalleryImages, GalleryImage } from "../../lib/galleryService"; // Updated import
-import { getGalleryImages } from "../../services/galleryService"; // Updated import
 import NextImage from 'next/image'; // Import NextImage for optimized images
 
 // Dynamically import the Lightbox component
