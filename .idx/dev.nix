@@ -1,1 +1,26 @@
-e3BrZ3N9OiB7CiAgY2hhbm5lbCA9ICJzdGFibGUtMjQuMDUiOwogIHBhY2thZ2VzID0gWwogICAgcGtncy5ub2RlanNfMjAKICBdOwogIGlkeC5leHRlbnNpb25zID0gWwogICAgCiAgXTsKICBpZHgucHJldmlld3MgPSB7CiAgICBwcmV2aWV3cyA9IHsKICAgICAgd2ViID0gewogICAgICAgIGNvbW1hbmQgPSBbCiAgICAgICAgICAibnBtIgogICAgICAgICAgInJ1biIKICAgICAgICAgICJkZXYiCiAgICAgICAgICAiLS0iCiAgICAgICAgICAiLS1wb3J0IgogICAgICAgICAgIiRQT1JUIgogICAgICAgICAgIi0taG9zdG5hbWUiCiAgICAgICAgICAiMC4wLjAuMCIKICAgICAgICBdOwogICAgICAgIG1hbmFnZXIgPSAid2ViIjsKICAgICAgfTsKICAgIH07CiAgfTsKfQ==
+{pkgs}: {
+  channel = "stable-24.05";
+  packages = [
+    pkgs.nodejs_20
+  ];
+  idx.extensions = [
+
+  ];
+  idx.previews = {
+    previews = {
+      web = {
+        command = [
+          "npm"
+          "run"
+          "dev"
+          "--"
+          "--port"
+          "$PORT"
+          "--hostname"
+          "0.0.0.0"
+        ];
+        manager = "web";
+      };
+    };
+  };
+}
