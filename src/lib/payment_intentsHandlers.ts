@@ -59,6 +59,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ clientSecret: paymentIntent.client_secret });
   } catch (error: any) {
     console.error("Error creating payment intent:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error instanceof Stripe.errors.StripeError) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: 500 },
+      );
+    }
+    return NextResponse.json(
+      { error: "An unexpected error occurred" },
+      { status: 500 },
+    );
   }
 }
