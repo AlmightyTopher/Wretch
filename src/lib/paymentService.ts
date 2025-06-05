@@ -7,7 +7,9 @@ export type OrderData = {
 };
 
 // Dummy payment service. Replace with Stripe/PayPal/Square integration later.
-export async function pay(orderData: OrderData): Promise<{ success: boolean; orderId: string }> {
+export async function pay(
+  orderData: OrderData,
+): Promise<{ success: boolean; orderId: string }> {
   // Simulate network/payment delay
   await new Promise((resolve) => setTimeout(resolve, 2000));
   // Print order payload for debugging
@@ -18,4 +20,4 @@ export async function pay(orderData: OrderData): Promise<{ success: boolean; ord
     success: true,
     orderId: `ORDER-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
   };
-} 
+}

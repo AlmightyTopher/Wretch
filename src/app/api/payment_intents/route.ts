@@ -1,4 +1,16 @@
-FIREBASE_PROJECT_ID=your-firebase-project-id
-FIREBASE_CLIENT_EMAIL=your-service-account-email@your-firebase-project-id.iam.gserviceaccount.com
-FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\\nYOUR\\nMULTILINE\\nPRIVATE\\nKEY\\nHERE\\n-----END PRIVATE KEY-----\\n"
-FIREBASE_STORAGE_BUCKET=your-firebase-project-id.appspot.com
+import { NextResponse } from "next/server";
+import { pay, type OrderData } from "@/lib/paymentService";
+
+// Simple wrapper around the dummy payment service.
+// Accepts order details in the request body and returns a fake
+// successful payment response.
+export async function POST(req: Request) {
+  try {
+    const orderData = (await req.json()) as OrderData;
+    const result = await pay(orderData);
+    return NextResponse.json(result);
+  } catch (err: any) {
+    console.error("[payment_intents]", err);
+    return NextResponse.json({ error: err.message }, { status: 400 });
+  }
+}
