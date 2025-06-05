@@ -1,14 +1,9 @@
-// Instructions: Update AdminGalleryEditor.tsx to use the revised services, add fields for title and description, improve UI, and handle Timestamps.
+// Admin interface for uploading and managing gallery images via Firebase
 
-// ... existing code ... <imports>
 import { getGalleryImages, addGalleryImage, deleteGalleryImage, GalleryImage, NewGalleryImageData } from '../lib/galleryService';
 import { uploadImageToFirebaseStorage, deleteImageFromFirebaseStorage } from '../lib/storageService';
 import { useSession } from 'next-auth/react';
-// Remove direct getStorage import, rely on services
-// import { deleteObject, ref, getStorage } from 'firebase/storage';
 import { Timestamp } from 'firebase/firestore'; // Import Timestamp
-
-// ... existing code ... <GalleryImage interface is now imported>
 
 const AdminGalleryEditor: React.FC = () => {
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
@@ -21,7 +16,6 @@ const AdminGalleryEditor: React.FC = () => {
 
   const { data: session, status } = useSession();
   const isAdmin = session?.user?.role === 'admin';
-  // const storage = getStorage(); // No longer needed here, storageService handles it
 
   useEffect(() => {
     if (status === 'loading') return;
@@ -48,8 +42,6 @@ const AdminGalleryEditor: React.FC = () => {
       setLoading(false);
     }
   };
-
-  // ... existing code ... <handleFileSelect function>
 
   const handleUpload = async () => {
     if (!isAdmin) {
@@ -124,7 +116,6 @@ const AdminGalleryEditor: React.FC = () => {
     }
   };
 
-  // ... existing code ... <loading and admin check>
       <div className="mb-4 p-4 border rounded shadow-sm bg-gray-50">
         <h3 className="text-xl font-semibold mb-3 text-gray-700">Upload New Image</h3>
         <div className="space-y-3">
