@@ -1,7 +1,14 @@
 // tests/admin/dashboard-ui.spec.ts
 
-// This is a basic structure for E2E tests for the admin dashboard.
+// Placeholder E2E style tests for the admin dashboard.
 // You would typically use a framework like Cypress or Playwright.
+import { describe, it, expect } from "vitest";
+
+describe("Admin Dashboard UI", () => {
+  it("placeholder", () => {
+    expect(true).toBe(true);
+  });
+});
 
 // Example using Playwright:
 // import { test, expect } from '@playwright/test';

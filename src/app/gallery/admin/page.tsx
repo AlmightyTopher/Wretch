@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Component, useEffect, useState, ErrorInfo } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { Component, useEffect, useState, ErrorInfo } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface GalleryItem {
   id: string;
@@ -42,6 +42,9 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 }
 
 const AdminGalleryPage = () => {
+  if (process.env.NODE_ENV === "production") {
+    return null;
+  }
   const { data: session, status } = useSession();
   const router = useRouter();
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
@@ -51,10 +54,10 @@ const AdminGalleryPage = () => {
   const [uploadError, setUploadError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (status === 'loading') return;
+    if (status === "loading") return;
     // Assuming session.user.isAdmin indicates admin
     if (!session || !(session.user as any)?.isAdmin) {
-      router.push('/admin'); // Redirect to admin login or dashboard if not authorized
+      router.push("/admin"); // Redirect to admin login or dashboard if not authorized
     } else {
       fetchGalleryItems();
     }
@@ -64,7 +67,7 @@ const AdminGalleryPage = () => {
     setLoading(true);
     setFetchError(null);
     try {
-      const res = await fetch('/api/gallery');
+      const res = await fetch("/api/gallery");
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
       }
@@ -72,7 +75,7 @@ const AdminGalleryPage = () => {
       setGalleryItems(data);
     } catch (err: any) {
       setFetchError(err.message);
-      console.error('Error fetching gallery items:', fetchError);
+      console.error("Error fetching gallery items:", fetchError);
     } finally {
       setLoading(false);
     }
@@ -89,23 +92,23 @@ const AdminGalleryPage = () => {
 
   const handleUpload = async () => {
     if (!selectedFile) {
-      setUploadError('Please select a file to upload.');
+      setUploadError("Please select a file to upload.");
       return;
     }
 
-    if (!selectedFile.type.startsWith('image/')) {
-      setUploadError('Please select an image file.');
+    if (!selectedFile.type.startsWith("image/")) {
+      setUploadError("Please select an image file.");
       return;
     }
 
     setLoading(true);
     setUploadError(null);
     const formData = new FormData();
-    formData.append('image', selectedFile);
+    formData.append("image", selectedFile);
 
     try {
-      const res = await fetch('/api/gallery', {
-        method: 'POST',
+      const res = await fetch("/api/gallery", {
+        method: "POST",
         body: formData,
       });
 
@@ -118,7 +121,7 @@ const AdminGalleryPage = () => {
       setSelectedFile(null); // Clear selected file
     } catch (err: any) {
       setUploadError(err.message);
-      console.error('Error uploading image:', uploadError);
+      console.error("Error uploading image:", uploadError);
     } finally {
       setLoading(false);
     }
@@ -128,10 +131,10 @@ const AdminGalleryPage = () => {
     setLoading(true);
     setFetchError(null); // Use fetchError for operations on existing items
     try {
-      const res = await fetch('/api/gallery', {
-        method: 'DELETE',
+      const res = await fetch("/api/gallery", {
+        method: "DELETE",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ id }),
       });
@@ -144,63 +147,85 @@ const AdminGalleryPage = () => {
       await fetchGalleryItems();
     } catch (err: any) {
       setFetchError(err.message);
-      console.error('Error deleting image:', fetchError);
+      console.error("Error deleting image:", fetchError);
     } finally {
       setLoading(false);
     }
   };
 
-  if (status === 'loading') {
+  if (status === "loading") {
     return <div>Loading authentication...</div>;
   }
 
   // Assuming session and isAdmin check in useEffect handles unauthorized redirect
   if (!session || !(session.user as any)?.isAdmin) {
-     return <div>Redirecting...</div>;
+    return <div>Redirecting...</div>;
   }
-
 
   // Render the main content within the ErrorBoundary
   return (
     <ErrorBoundary>
-      <div style={{ padding: '20px' }}>
+      <div style={{ padding: "20px" }}>
         <h1>Admin Gallery Management</h1>
 
-        <div style={{ marginBottom: '20px', border: '1px solid #ccc', padding: '15px' }}>
+        <div
+          style={{
+            marginBottom: "20px",
+            border: "1px solid #ccc",
+            padding: "15px",
+          }}
+        >
           <h2>Upload New Image</h2>
           <input type="file" accept="image/*" onChange={handleFileChange} />
           <button onClick={handleUpload} disabled={!selectedFile || loading}>
-            {loading ? 'Uploading...' : 'Upload Image'}
+            {loading ? "Uploading..." : "Upload Image"}
           </button>
-          {uploadError && <p style={{ color: 'red' }}>Upload failed: {uploadError}</p>}
+          {uploadError && (
+            <p style={{ color: "red" }}>Upload failed: {uploadError}</p>
+          )}
         </div>
 
         <h2>Existing Gallery Items</h2>
         {loading && <p>Loading gallery...</p>}
-        {fetchError && <p style={{ color: 'red' }}>Error fetching or deleting images: {fetchError}</p>}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px' }}>
+        {fetchError && (
+          <p style={{ color: "red" }}>
+            Error fetching or deleting images: {fetchError}
+          </p>
+        )}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "15px" }}>
           {galleryItems.map((item) => (
-            <div key={item.id} style={{ border: '1px solid #eee', padding: '10px', position: 'relative' }}>
-              <img src={item.downloadURL} alt={`Gallery Image ${item.id}`} style={{ width: '150px', height: '150px', objectFit: 'cover' }} />
+            <div
+              key={item.id}
+              style={{
+                border: "1px solid #eee",
+                padding: "10px",
+                position: "relative",
+              }}
+            >
+              <img
+                src={item.downloadURL}
+                alt={`Gallery Image ${item.id}`}
+                style={{ width: "150px", height: "150px", objectFit: "cover" }}
+              />
               <button
                 onClick={() => handleDelete(item.id)}
                 disabled={loading}
                 style={{
-                  position: 'absolute',
-                  top: '5px',
-                  right: '5px',
-                  backgroundColor: 'rgba(255, 0, 0, 0.7)',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '50%',
-                  width: '25px',
-                  height: '25px',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
+                  position: "absolute",
+                  top: "5px",
+                  right: "5px",
+                  backgroundColor: "rgba(255, 0, 0, 0.7)",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "50%",
+                  width: "25px",
+                  height: "25px",
+                  cursor: "pointer",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: "14px",
+                  fontWeight: "bold",
                 }}
               >
                 X
