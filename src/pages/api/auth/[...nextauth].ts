@@ -1,4 +1,4 @@
-// Instructions: Add detailed logging to [...nextauth].ts for Firebase client config, auth object initialization, and within the authorize function. Also log if NEXTAUTH_SECRET is present and enable NextAuth debug mode.
+// NextAuth configuration using Firebase admin for credential verification
 
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';

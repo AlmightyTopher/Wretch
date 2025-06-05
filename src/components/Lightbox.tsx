@@ -1,4 +1,4 @@
-// Instructions: Update Lightbox component to accept and display title and description, and improve styling and accessibility.
+// Lightbox component displays an image in a modal with optional title and description
 
 import React, { useEffect } from "react";
 
