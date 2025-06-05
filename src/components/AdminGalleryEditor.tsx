@@ -1,7 +1,19 @@
-// Admin interface for uploading and managing gallery images via Firebase
+/**
+ * AdminGalleryEditor
+ *
+ * Provides an admin-only UI for uploading new gallery images, editing their
+ * metadata, and removing existing images. Image metadata is stored via
+ * `galleryService` in Firestore while the actual files are handled through
+ * `storageService` wrappers around Firebase Storage.
+ *
+ * Requires an authenticated user with an `admin` role (checked via
+ * `next-auth`). This component does not receive props.
+ */
 
 import { getGalleryImages, addGalleryImage, deleteGalleryImage, GalleryImage, NewGalleryImageData } from '../lib/galleryService';
 import { uploadImageToFirebaseStorage, deleteImageFromFirebaseStorage } from '../lib/storageService';
+// Direct Firebase Storage calls (e.g., getStorage) were removed to keep this
+// component focused on UI logic. storageService abstracts those operations.
 import { useSession } from 'next-auth/react';
 import { Timestamp } from 'firebase/firestore'; // Import Timestamp
 
