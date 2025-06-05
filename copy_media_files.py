@@ -31,4 +31,4 @@ with open(log_file, 'a', encoding='utf-8') as log:
                     try:
                         shutil.copy2(src_path, dest_path)
                     except Exception as e:
-                        log.write(f"Failed to copy {file}: {e}\n") 
+                        log.write(f"Failed to copy {file}: {e}\n")
