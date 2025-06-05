@@ -1,4 +1,4 @@
-// Instructions: Update checkout-page.tsx to properly use the Elements provider from Stripe, fetch client secret, and pass it to CheckoutForm. Also, improve loading and error states.
+// Checkout page that initializes Stripe Elements and handles payment state
 
 import { useState, useEffect } from "react";
 import { useCart } from "../../components/CartContext";
@@ -8,7 +8,6 @@ import CheckoutForm from "../../components/CheckoutForm"; // Import the updated 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-// ... existing code ... <imports>
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 export default function CheckoutPage() {

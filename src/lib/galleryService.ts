@@ -1,5 +1,4 @@
-// Instructions: Fix the GalleryImage interface, AddGalleryImageError class, use Timestamp for dates, and improve Firestore initialization and error handling.
-
+// Utility functions for managing gallery images in Firestore
 import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, Timestamp } from "firebase/firestore";
 import { db } from './firebase'; // Corrected import
 

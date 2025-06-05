@@ -1,4 +1,4 @@
-// Instructions: Update CheckoutForm.tsx to use PaymentElement, fetch clientSecret dynamically based on cart total, and improve error handling and user feedback.
+// Checkout form integrates with Stripe PaymentElement and handles payments
 
 import React, { useState, useEffect } from 'react';
 import { CardElement, useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
