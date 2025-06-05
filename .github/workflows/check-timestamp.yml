@@ -1,0 +1,18 @@
+name: Check TODO Timestamp
+
+on:
+  pull_request:
+    paths: ["TODO.md"]
+
+jobs:
+  timestamp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Validate timestamp placeholder
+        run: |
+          if grep -q "{{AUTO_TIMESTAMP}}" TODO.md; then
+            echo "Placeholder {{AUTO_TIMESTAMP}} found. Run pre-commit hook." >&2
+            exit 1
+          fi
+
