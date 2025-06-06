@@ -1,7 +1,7 @@
+import React, { useState, useEffect } from 'react';
 // Instructions: Update AdminGalleryEditor.tsx to use the revised services, add fields for title and description, improve UI, and handle Timestamps.
 
 // ... existing code ... <imports>
-import React, { useState, useEffect } from 'react';
 import { getGalleryImages, addGalleryImage, deleteGalleryImage, GalleryImage, NewGalleryImageData } from '../lib/galleryService';
 import { uploadImageToFirebaseStorage, deleteImageFromFirebaseStorage } from '../lib/storageService';
 import { useSession } from 'next-auth/react';
