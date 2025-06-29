@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 // Instructions: Update AdminGalleryEditor.tsx to use the revised services, add fields for title and description, improve UI, and handle Timestamps.
 
 // ... existing code ... <imports>
@@ -190,6 +191,11 @@ const AdminGalleryEditor: React.FC = () => {
               </button>
               <p className="text-xs text-gray-500 mt-1">Uploaded: {image.uploadedAt instanceof Timestamp ? image.uploadedAt.toDate().toLocaleDateString() : 'Date N/A'}</p>
             </li>
-          ))}
-        </ul>
-      </div>
+      ))}
+    </ul>
+  </div>
+  );
+
+};
+
+export default AdminGalleryEditor;

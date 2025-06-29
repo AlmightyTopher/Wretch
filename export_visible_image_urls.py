@@ -46,4 +46,4 @@ with open(output_file, 'w', encoding='utf-8') as out:
     for url in sorted(found):
         out.write(url + '\n')
 
-print(f"Exported {len(found)} image URLs/paths to {output_file}") 
+print(f"Exported {len(found)} image URLs/paths to {output_file}")

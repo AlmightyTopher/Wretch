@@ -87,4 +87,4 @@ with open(external_log, 'w', encoding='utf-8') as extlog:
 with open(summary_log, 'w', encoding='utf-8') as s:
     s.write(f"Local files copied: {local_copied}\n")
     s.write(f"External files downloaded: {external_downloaded}\n")
-    s.write(f"External files failed: {external_failed}\n") 
+    s.write(f"External files failed: {external_failed}\n")
