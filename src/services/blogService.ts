@@ -1,14 +1,6 @@
-import { getFirestore, collection, addDoc, Timestamp, getDocs } from 'firebase/firestore';
-import { initializeApp } from 'firebase/app';
+import { collection, addDoc, Timestamp, getDocs } from 'firebase/firestore';
+import { db } from '../lib/firebase'; // Import db from the centralized firebase.ts
 
-// TODO: Replace with your Firebase project configuration - This is a placeholder
-const firebaseConfig = {
-  // Your Firebase config
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 // Function to add a new blog post
 export const addBlogPost = async (post: {
